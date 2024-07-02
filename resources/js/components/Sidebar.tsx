@@ -7,6 +7,7 @@ import {
     Users,
     LineChart,
     Settings,
+    Minus,
 } from "lucide-react";
 import {
     Accordion,
@@ -40,20 +41,28 @@ const Sidebar = () => {
 
             <Accordion type="single" collapsible className="w-full px-3 py-2">
                 <AccordionItem value="item-1" className="w-full">
-                    <AccordionTrigger >
+                    <AccordionTrigger>
                         <div className="flex gap-2">
                             <Settings className="size-4" />
                             <span>Setup</span>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className="grid gap-4">
+                        <div className="grid gap-2">
                             <Link
                                 href={route("loan-products.index")}
-                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
                             >
-                                <Package className="h-4 w-4" />
+                                <Minus className="h-4 w-4" />
                                 Loan Products
+                            </Link>
+
+                            <Link
+                                href={route("loan-fees.index")}
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
+                            >
+                                <Minus className="h-4 w-4" />
+                                Loan Fees
                             </Link>
                         </div>
                     </AccordionContent>

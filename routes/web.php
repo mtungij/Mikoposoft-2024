@@ -37,7 +37,7 @@ Route::resource('/loan-products', LoanCategoryController::class)
     ->only(['index','store','update']);
 
 Route::resource('/loan-fees', LoanFeeController::class)
-    ->middleware(['auth','verified'])
+    ->middleware(['auth','verified', RemoveCommaFromInput::class])
     ->only(['index','store','update']);
 
 

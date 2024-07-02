@@ -34,17 +34,17 @@ class LoanFeeController extends Controller
     public function store(Request $request)
     {
        $validated = $request->validate([
-           'category'=> 'required',
+           'category'=> 'required|max:255',
            'fee_type'=> 'required',
-           'desc'=> 'required',
-           'fee_amount'=> 'required',
+           'desc'=> 'nullable',
+           'fee_amount'=> 'nullable|numeric|max:1000000000',
 
        ]);
            $validated['company_id'] = auth()->user()->company_id;
 
            LoanFee::create($validated);
 
-           return to_route('LoanFee.index');
+           return redirect()->back();
 
     }
 
@@ -67,18 +67,18 @@ class LoanFeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LoanFee $loanfee)
+    public function update(Request $request, LoanFee $loanFee)
     {
         $validated = $request->validate([
-            'category'=> 'required',
+            'category'=> 'required|max:255',
             'fee_type'=> 'required',
-            'desc'=> 'required',
-            'fee_amount'=> 'required',
-            ]);
+            'desc'=> 'nullable',
+            'fee_amount'=> 'nullable|numeric|max:1000000000',
+        ]);
 
-            $loanfee->update($validated);
+        $loanFee->update($validated);
 
-            return redirect()->back();
+        return redirect()->back();
     }
 
     /**

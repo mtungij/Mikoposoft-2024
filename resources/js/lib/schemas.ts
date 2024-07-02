@@ -13,4 +13,5 @@ export interface LoanFee {
     category: string;
     fee_type: string;
     desc: string;
+    fee_amount: number;
 }
