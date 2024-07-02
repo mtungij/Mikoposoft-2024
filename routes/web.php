@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Employee;
 use App\Http\Controllers\LoanCategoryController;
+use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
 use App\Models\LoanCategory;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,9 @@ Route::resource('/employees', Employee::class)
     ->middleware(['auth','verified']);
 
 Route::resource('/loan-products', LoanCategoryController::class)
+    ->middleware(['auth','verified']);
+
+    Route::resource('/loan-fee', LoanFeeController::class)
     ->middleware(['auth','verified']);
 
 
