@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Employee;
+use App\Http\Controllers\InterestFormular;
 use App\Http\Controllers\LoanCategoryController;
 use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
@@ -39,6 +40,10 @@ Route::resource('/loan-products', LoanCategoryController::class)
 Route::resource('/loan-fees', LoanFeeController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','update']);
+
+Route::resource('/interest-formulars',InterestFormular::class)
+    ->middleware(['auth','verified'])
+    ->only(['index','store','destroy']);
 
 
 require __DIR__.'/auth.php';
