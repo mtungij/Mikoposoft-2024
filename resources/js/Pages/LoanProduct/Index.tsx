@@ -24,14 +24,13 @@ const Index = ({
     auth,
     loanProducts,
 }: PageProps<{ loanProducts: LoanProduct[] }>) => {
-    
     const searchLoanProduct = useDebouncedCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.value === "") {
-                router.visit(route("employees.index"));
+                router.visit(route("loan-products.index"));
             } else {
                 router.visit(
-                    route("employees.index", {
+                    route("loan-products.index", {
                         search: event.target.value,
                     }),
                     {
@@ -82,13 +81,19 @@ const Index = ({
                                 <TableRow>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{loanProduct.name}</TableCell>
-                                    <TableCell>{formatNumber(loanProduct.from)}</TableCell>
-                                    <TableCell>{formatNumber(loanProduct.to)}</TableCell>
+                                    <TableCell>
+                                        {formatNumber(loanProduct.from)}
+                                    </TableCell>
+                                    <TableCell>
+                                        {formatNumber(loanProduct.to)}
+                                    </TableCell>
                                     <TableCell>
                                         {loanProduct.interest}%
                                     </TableCell>
                                     <TableCell className="flex gap-2 items-center">
-                                        <EditLoanProduct loanProduct={loanProduct} />
+                                        <EditLoanProduct
+                                            loanProduct={loanProduct}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))}

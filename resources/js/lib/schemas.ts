@@ -6,3 +6,11 @@ export interface LoanProduct {
     to: number;
     interest: number;
 }
+
+export interface LoanFee {
+    id: number;
+    company_id: number;
+    category: string;
+    fee_type: string;
+    desc: string;
+}
