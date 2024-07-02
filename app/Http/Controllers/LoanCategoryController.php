@@ -32,7 +32,18 @@ class LoanCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' =>'required|max:255',
+            'from' =>'required|numeric|max:100000000000',
+            'to' =>'required|numeric|max:100000000000',
+            'interest' =>'required|numeric|max:100',
+        ]);
+
+        $validated['company_id'] = auth()->user()->company_id;
+
+        LoanCategory::create($validated);
+
+        return redirect()->back();
     }
 
     /**
@@ -54,9 +65,18 @@ class LoanCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, LoanCategory $loanProduct)
     {
-        //
+        $validated = $request->validate([
+            'name' =>'required|max:255',
+            'from' =>'required|numeric|max:100000000000',
+            'to' =>'required|numeric|max:100000000000',
+            'interest' =>'required|numeric|max:100',
+        ]);
+
+        $loanProduct->update($validated);
+
+        return redirect()->back();
     }
 
     /**

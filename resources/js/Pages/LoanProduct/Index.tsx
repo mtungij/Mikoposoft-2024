@@ -16,11 +16,15 @@ import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { DeleteUser } from "../Employees/partials/Deleteuser";
 import { LoanProduct } from "@/lib/schemas";
+import { CreateLoanProduct } from "./partials/CreateLoanProduct";
+import { formatNumber } from "@/lib/utils";
+import { EditLoanProduct } from "./partials/EditLoanProduct";
 
 const Index = ({
     auth,
     loanProducts,
 }: PageProps<{ loanProducts: LoanProduct[] }>) => {
+    
     const searchLoanProduct = useDebouncedCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.value === "") {
@@ -40,12 +44,12 @@ const Index = ({
     );
     return (
         <Authenticated user={auth.user}>
-            <Head title="Loan Category" />
+            <Head title="Loan Product" />
 
             <section>
                 <div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                        Loan Product
+                        Loan Products
                     </h2>
                 </div>
                 <div className="w-full grid md:grid-cols-2 items-center gap-4 pb-5">
@@ -58,14 +62,7 @@ const Index = ({
                     />
 
                     <div className="flex md:justify-end">
-                        <Button
-                            onClick={() =>
-                                router.visit(route("employees.create"))
-                            }
-                            className="w-full md:w-fit"
-                        >
-                            Create Loan Product
-                        </Button>
+                        <CreateLoanProduct />
                     </div>
                 </div>
                 <div className="border border-gray-200 rounded-md">
@@ -85,18 +82,13 @@ const Index = ({
                                 <TableRow>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{loanProduct.name}</TableCell>
-                                    <TableCell>{loanProduct.from}</TableCell>
-                                    <TableCell>{loanProduct.to}</TableCell>
+                                    <TableCell>{formatNumber(loanProduct.from)}</TableCell>
+                                    <TableCell>{formatNumber(loanProduct.to)}</TableCell>
                                     <TableCell>
-                                        {loanProduct.interest}
+                                        {loanProduct.interest}%
                                     </TableCell>
                                     <TableCell className="flex gap-2 items-center">
-                                        <Button
-                                            size={"icon"}
-                                            variant={"outline"}
-                                        >
-                                            <Edit />
-                                        </Button>
+                                        <EditLoanProduct loanProduct={loanProduct} />
                                     </TableCell>
                                 </TableRow>
                             ))}

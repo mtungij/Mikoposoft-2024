@@ -22,7 +22,7 @@ const CreateUser = ({
     branches,
     employee,
 }: PageProps<{ branches: Branch[]; employee: User }>) => {
-    const { data, setData, patch, errors, processing, reset } = useForm({
+    const { data, setData, patch, errors, processing } = useForm({
         name: employee?.name,
         branch_id: employee?.branch_id,
         phone: employee.phone,
