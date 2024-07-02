@@ -70,7 +70,7 @@ class LoanCategoryController extends Controller
         $validated = $request->validate([
             'name' =>'required|max:255',
             'from' =>'required|numeric|max:100000000000',
-            'to' =>'required|numeric|max:100000000000',
+            'to' =>'required|numeric|max:100000000000|gt:from',
             'interest' =>'required|numeric|max:100',
         ]);
 

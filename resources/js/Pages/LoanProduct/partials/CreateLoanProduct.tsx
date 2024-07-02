@@ -29,6 +29,15 @@ export function CreateLoanProduct() {
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
 
+        const fromValue = parseInt(data.from.replaceAll(",", ""));
+        const toValue = parseInt(data.to.replaceAll(",", ""));
+        if (fromValue > toValue) {
+            toast.error(
+                "Maximum loan amount must be greater than minimum loan amount"
+            );
+            return;
+        }
+
         post(route("loan-products.store"), {
             onSuccess: () => {
                 reset();
