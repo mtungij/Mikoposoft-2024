@@ -40,7 +40,6 @@ class LoanFeeController extends Controller
            'fee_type'=> 'required',
            'desc'=> 'required',
            'fee_amount'=> 'required',
-           'Branch_id'=> 'required',
 
        ]);
            $validated['company_id'] = auth()->user()->company_id;
@@ -62,24 +61,36 @@ class LoanFeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $loanfee)
     {
-        //
+        return Inertia::render('LoanFee/EditFee', [
+            'loanfee' => $loanfee,
+           'fees' => LoanFee::where('company_id', auth()->user()->company_id)->get()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, LoanFee $loanfee)
     {
-        //
+        $validated = $request->validate([
+            'category'=> 'required',
+            'fee_type'=> 'required',
+            'desc'=> 'required',
+            'fee_amount'=> 'required',
+            ]);
+
+            $loanfee->update($validated);
+
+            return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LoanFee $loanFee)
     {
-        //
+        $loanFee->delete();
     }
 }
