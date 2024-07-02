@@ -25,9 +25,7 @@ class LoanFeeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('LoanFee/CreateFee', [
-            'fees' => LoanFee::where('company_id', auth()->user()->company_id)->get()
-        ]);
+        //
     }
 
     /**
@@ -63,10 +61,7 @@ class LoanFeeController extends Controller
      */
     public function edit(string $loanfee)
     {
-        return Inertia::render('LoanFee/EditFee', [
-            'loanfee' => $loanfee,
-           'fees' => LoanFee::where('company_id', auth()->user()->company_id)->get()
-        ]);
+        //
     }
 
     /**

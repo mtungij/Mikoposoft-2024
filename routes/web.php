@@ -36,8 +36,9 @@ Route::resource('/loan-products', LoanCategoryController::class)
     ->middleware(['auth','verified', RemoveCommaFromInput::class])
     ->only(['index','store','update']);
 
-    Route::resource('/loan-fee', LoanFeeController::class)
-    ->middleware(['auth','verified']);
+Route::resource('/loan-fees', LoanFeeController::class)
+    ->middleware(['auth','verified'])
+    ->only(['index','store','update']);
 
 
 require __DIR__.'/auth.php';
