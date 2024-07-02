@@ -31,28 +31,28 @@ class InterestFormular extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' =>'required|max:255',
-        ]);
+        // $validated = $request->validate([
+        //     'name' =>'required|max:255',
+        // ]);
 
-        $formula =Formula::where('name', $validated['name'])->first();
+        // $formula =Formula::where('name', $validated['name'])->first();
 
-        if ($formula) {
+        // if ($formula) {
               
-            return redirect()->route('');
+        //     return redirect()->route('');
 
-        } else {
+        // } else {
 
-        $validated['company_id'] = auth()->user()->company_id;
+        // $validated['company_id'] = auth()->user()->company_id;
 
-        $formula = Formula::create($validated);
+        // $formula = Formula::create($validated);
 
-        return redirect()->back();
+        // return redirect()->back();
 
         }
 
 
-    }
+    
 
     /**
      * Display the specified resource.
