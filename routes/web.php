@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Employee;
 use App\Http\Controllers\LoanCategoryController;
+use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RemoveCommaFromInput;
 use App\Models\LoanCategory;
@@ -34,6 +35,9 @@ Route::resource('/employees', Employee::class)
 Route::resource('/loan-products', LoanCategoryController::class)
     ->middleware(['auth','verified', RemoveCommaFromInput::class])
     ->only(['index','store','update']);
+
+    Route::resource('/loan-fee', LoanFeeController::class)
+    ->middleware(['auth','verified']);
 
 
 require __DIR__.'/auth.php';
