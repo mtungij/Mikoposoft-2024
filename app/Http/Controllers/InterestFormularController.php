@@ -6,15 +6,15 @@ use App\Models\Formula;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class InterestFormular extends Controller
+class InterestFormularController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('InterestFormular/Index', [
-            'formulars' =>  Formula::where('company_id', auth()->user()->company_id)->get(),
+        return Inertia::render('Formula/Index', [
+            'formulas' =>  Formula::where('company_id', auth()->user()->company_id)->get(),
         ]);
     }
 
@@ -31,27 +31,25 @@ class InterestFormular extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'name' =>'required|max:255',
-        // ]);
+        $validated = $request->validate([
+            'name' =>'required|max:255',
+        ]);
 
-        // $formula =Formula::where('name', $validated['name'])->first();
+        $formula =Formula::where('name', $validated['name'])->first();
 
-        // if ($formula) {
-              
-        //     return redirect()->route('');
+        if ($formula) {
+            return redirect(status: 422)->back()->with('error', 'Formula already exist');
+        } else {
 
-        // } else {
+        $validated['company_id'] = auth()->user()->company_id;
 
-        // $validated['company_id'] = auth()->user()->company_id;
+        $formula = Formula::create($validated);
 
-        // $formula = Formula::create($validated);
-
-        // return redirect()->back();
+        return redirect()->back();
 
         }
 
-
+    }
     
 
     /**
@@ -93,6 +91,5 @@ class InterestFormular extends Controller
     public function destroy(Formula $formula)
     {
         $formula->delete();
-        
     }
 }

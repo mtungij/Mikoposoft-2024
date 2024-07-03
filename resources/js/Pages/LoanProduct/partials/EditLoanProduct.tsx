@@ -17,6 +17,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { LoanProduct } from "@/lib/schemas";
 import { Edit2Icon } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function EditLoanProduct({ loanProduct }: { loanProduct: LoanProduct }) {
     const [open, setOpen] = useState(false);
@@ -26,6 +27,8 @@ export function EditLoanProduct({ loanProduct }: { loanProduct: LoanProduct }) {
         from: loanProduct.from as any,
         to: loanProduct.to as any,
         interest: loanProduct.interest as any,
+        penalt_type: loanProduct.penalt_type,
+        penalt_amount: loanProduct.penalt_amount as any
     });
 
     const submit = (event: React.FormEvent) => {
@@ -105,6 +108,32 @@ export function EditLoanProduct({ loanProduct }: { loanProduct: LoanProduct }) {
                                 className="col-span-3"
                             />
                             <InputError message={errors.interest} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="interest">Penalt Type</Label>
+                            <Select name="penalt_type" value={data.penalt_type} onValueChange={(value) => setData('penalt_type', value)}>
+                                <SelectTrigger >
+                                    <SelectValue placeholder="Select type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem key="money" value="money" >Money Value</SelectItem>
+                                    <SelectItem key="percentage" value="percentage" >Percentage Value</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <InputError message={errors.penalt_type} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="penalt_amount">Penalt Amount(%)</Label>
+                            <Input
+                                id="penalt_amount"
+                                type="number"
+                                value={data.penalt_amount}
+                                onChange={(e) =>
+                                    setData("penalt_amount", e.target.value)
+                                }
+                                className="col-span-3"
+                            />
+                            <InputError message={errors.penalt_amount} />
                         </div>
                     </div>
                     <DialogFooter>

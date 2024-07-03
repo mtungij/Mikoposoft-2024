@@ -74,6 +74,9 @@ const Index = ({
                                 <TableHead>Minimum</TableHead>
                                 <TableHead>Maximum</TableHead>
                                 <TableHead>Interest</TableHead>
+                                <TableHead>Penalt Type</TableHead>
+                                <TableHead>Penalt Amount</TableHead>
+                                <TableHead>Loan Fee</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -87,6 +90,9 @@ const Index = ({
                                     <TableCell>
                                         {loanProduct.interest}%
                                     </TableCell>
+                                    <TableCell>{loanProduct.penalt_type}</TableCell>
+                                    <TableCell>{loanProduct.penalt_amount}</TableCell>
+                                    <TableCell>{loanProduct.fee}</TableCell>
                                     <TableCell className="flex gap-2 items-center">
                                         <EditLoanProduct loanProduct={loanProduct} />
                                     </TableCell>

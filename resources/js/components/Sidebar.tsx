@@ -40,7 +40,7 @@ const Sidebar = () => {
 
             <Accordion type="single" collapsible className="w-full px-3 py-2">
                 <AccordionItem value="item-1" className="w-full">
-                    <AccordionTrigger >
+                    <AccordionTrigger>
                         <div className="flex gap-2">
                             <Settings className="size-4" />
                             <span>Setup</span>
@@ -54,6 +54,13 @@ const Sidebar = () => {
                             >
                                 <Package className="h-4 w-4" />
                                 Loan Products
+                            </Link>
+                            <Link
+                                href={route("formulas.index")}
+                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                            >
+                                <Package className="h-4 w-4" />
+                                Interest Formular
                             </Link>
                         </div>
                     </AccordionContent>
