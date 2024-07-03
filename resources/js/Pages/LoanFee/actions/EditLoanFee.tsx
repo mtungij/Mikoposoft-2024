@@ -51,7 +51,7 @@ const EditLoanFee = ({ loanFee }: { loanFee: LoanFee }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={'ghost'} size={'icon'}>
+                <Button variant={'primary'} size={'icon'}>
                     <Edit className="size-4" />
                 </Button>
             </DialogTrigger>

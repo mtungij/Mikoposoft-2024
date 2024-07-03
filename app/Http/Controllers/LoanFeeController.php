@@ -35,16 +35,17 @@ class LoanFeeController extends Controller
     {
        $validated = $request->validate([
            'category'=> 'required|max:255',
-           'fee_type'=> 'required',
+           'fee_type'=> 'nullable',
            'desc'=> 'nullable',
            'fee_amount'=> 'nullable|numeric|max:1000000000',
 
        ]);
-           $validated['company_id'] = auth()->user()->company_id;
 
-           LoanFee::create($validated);
+        $validated['company_id'] = auth()->user()->company_id;
 
-           return redirect()->back();
+        LoanFee::create($validated);
+
+        return redirect()->back();
 
     }
 

@@ -16,7 +16,6 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Fence } from "lucide-react";
 import {
     Select,
     SelectContent,
