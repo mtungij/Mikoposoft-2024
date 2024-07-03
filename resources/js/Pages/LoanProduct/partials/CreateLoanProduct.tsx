@@ -16,6 +16,7 @@ import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PlusCircle } from "lucide-react";
 
 export function CreateLoanProduct() {
     const [open, setOpen] = useState(false);
@@ -53,7 +54,10 @@ export function CreateLoanProduct() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Create Loan Product</Button>
+                <Button>
+                    <PlusCircle className="size-4 mr-2" />
+                    Create Loan Product
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-4xl">
                 <DialogHeader>
@@ -117,19 +121,34 @@ export function CreateLoanProduct() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="interest">Penalt Type</Label>
-                            <Select name="penalt_type" value={data.penalt_type} onValueChange={(value) => setData('penalt_type', value)}>
-                                <SelectTrigger >
+                            <Select
+                                name="penalt_type"
+                                value={data.penalt_type}
+                                onValueChange={(value) =>
+                                    setData("penalt_type", value)
+                                }
+                            >
+                                <SelectTrigger>
                                     <SelectValue placeholder="Select type" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem key="money" value="money" >Money Value</SelectItem>
-                                    <SelectItem key="percentage" value="percentage" >Percentage Value</SelectItem>
+                                    <SelectItem key="money" value="money">
+                                        Money Value
+                                    </SelectItem>
+                                    <SelectItem
+                                        key="percentage"
+                                        value="percentage"
+                                    >
+                                        Percentage Value
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                             <InputError message={errors.penalt_type} />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="penalt_amount">Penalt Amount(%)</Label>
+                            <Label htmlFor="penalt_amount">
+                                Penalt Amount(%)
+                            </Label>
                             <Input
                                 id="penalt_amount"
                                 type="number"

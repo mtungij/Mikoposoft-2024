@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { PageProps, User } from "@/types";
 import { Head, router, useForm } from "@inertiajs/react";
-import { Edit, Trash } from "lucide-react";
+import { Edit, PlusCircle, Trash } from "lucide-react";
 import React, { FormEvent } from "react";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
@@ -54,7 +54,7 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
         <Authenticated user={auth.user}>
             <Head title="Employees" />
 
-            <section>
+            <section className="bg-white p-5 rounded-md shadow-lg">
                 <div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                         Employees
@@ -76,6 +76,7 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
                             }
                             className="w-full md:w-fit"
                         >
+                            <PlusCircle className="size-4 mr-2" />
                             Create Employee
                         </Button>
                     </div>
@@ -105,11 +106,14 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
                                     <TableCell>{user.position}</TableCell>
                                     <TableCell>{user.gender}</TableCell>
                                     <TableCell className="flex gap-2 items-center">
-                                        {user.position !== 'admin'&& <DeleteUser user={user} /> }
-                                        
+                                        {user.position !== "admin" && (
+                                            <DeleteUser user={user} />
+                                        )}
+
                                         <Button
                                             size={"icon"}
                                             variant={"outline"}
+                                            className="text-cyan-500"
                                             onClick={() =>
                                                 router.visit(
                                                     route("employees.edit", {
@@ -118,7 +122,7 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
                                                 )
                                             }
                                         >
-                                            <Edit />
+                                            <Edit className="size-4 stro-2" />
                                         </Button>
                                     </TableCell>
                                 </TableRow>

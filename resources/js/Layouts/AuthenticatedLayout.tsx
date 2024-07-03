@@ -34,6 +34,7 @@ import {
     Users,
 } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Authenticated({
     user,
@@ -44,10 +45,10 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className="grid min-h-screen  w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-            <div className="hidden border-r bg-muted/40 md:block">
-                <div className="flex sticky top-0 items-start h-full max-h-screen flex-col gap-2">
-                    <div className="flex justify-between w-full h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        <div className="grid min-h-screen bg-transparent dark:bg-gray-900  w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+            <div className="hidden border-r md:block">
+                <div className="flex sticky top-0 items-start h-full max-h-screen bg-cyan-950 dark flex-col gap-2">
+                    <div className="flex justify-between w-full h-14 items-center border-b border-gray-700 px-4 lg:h-[60px] lg:px-6">
                         <Link
                             href="/"
                             className="flex items-center gap-2 font-semibold"
@@ -88,7 +89,7 @@ export default function Authenticated({
                 </div>
             </div>
             <div className="flex flex-col max-w-full overflow-hidden">
-                <header className="flex sticky top-0 h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+                <header className="flex sticky top-0 h-14 items-center gap-4 border-b bg-cyan-950 dark px-4 lg:h-[60px] lg:px-6">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button
@@ -130,45 +131,48 @@ export default function Authenticated({
                                 <Input
                                     type="search"
                                     placeholder="Search products..."
-                                    className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                                    className="w-full appearance-none bg-cyan-900 pl-8 shadow-none md:w-2/3 lg:w-1/3"
                                 />
                             </div>
                         </form>
                     </div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="secondary"
-                                size="icon"
-                                className="rounded-full"
-                            >
-                                <CircleUser className="h-5 w-5" />
-                                <span className="sr-only">
-                                    Toggle user menu
-                                </span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                onClick={() => router.visit("profile")}
-                            >
-                                Settings
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                onClick={() => router.post("logout")}
-                            >
-                                Logout
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-3">
+                        <ModeToggle />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="secondary"
+                                    size="icon"
+                                    className="rounded-full"
+                                >
+                                    <CircleUser className="h-5 w-5" />
+                                    <span className="sr-only">
+                                        Toggle user menu
+                                    </span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>
+                                    My Account
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => router.visit("profile")}
+                                >
+                                    Settings
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>Support</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => router.post("logout")}
+                                >
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </header>
-                <main className="p-4 lg:gap-6 lg:p-6">
-                    {children}
-                </main>
+                <main className="md:p-3 lg:gap-6 lg:p-6">{children}</main>
             </div>
         </div>
     );

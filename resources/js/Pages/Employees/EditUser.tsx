@@ -72,7 +72,7 @@ const CreateUser = ({
                         <div className="space-y-2">
                             <InputLabel htmlFor="branch_id" value="Branch" />
                             <Select
-                                value={data.branch_id.toString()}
+                                value={data?.branch_id?.toString()}
                                 name="branch_id"
                                 onValueChange={(value) =>
                                     setData("branch_id", parseInt(value))

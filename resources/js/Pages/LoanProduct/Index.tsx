@@ -45,7 +45,7 @@ const Index = ({
         <Authenticated user={auth.user}>
             <Head title="Loan Product" />
 
-            <section>
+            <section className="bg-white p-5 rounded-md shadow-lg">
                 <div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                         Loan Products
@@ -64,7 +64,7 @@ const Index = ({
                         <CreateLoanProduct />
                     </div>
                 </div>
-                <div className="border border-gray-200 rounded-md">
+                <div className="border border-gray-200 dark:border-gray-700 rounded-md">
                     <Table>
                         <TableHeader>
                             <TableRow>

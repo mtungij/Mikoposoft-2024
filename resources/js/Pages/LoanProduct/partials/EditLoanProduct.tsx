@@ -16,7 +16,7 @@ import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { LoanProduct } from "@/lib/schemas";
-import { Edit2Icon } from "lucide-react";
+import { Edit, Edit2Icon } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function EditLoanProduct({ loanProduct }: { loanProduct: LoanProduct }) {
@@ -45,8 +45,8 @@ export function EditLoanProduct({ loanProduct }: { loanProduct: LoanProduct }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size={"icon"} variant={"ghost"}>
-                    <Edit2Icon className="size-4" />
+                <Button size={"icon"} className="text-cyan-500" variant={"outline"}>
+                    <Edit className="size-4 stroke-2" />
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-4xl">
