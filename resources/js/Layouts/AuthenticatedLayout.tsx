@@ -53,11 +53,10 @@ export default function Authenticated({
                             href="/"
                             className="flex items-center gap-2 font-semibold"
                         >
-                            <Package2 className="h-6 w-6" />
-                            <span className="">Mikoposoft </span>
+                            <Package2 className="h-6 w-6 dark:text-slate-400" />
+                            <span className="dark:text-gray-200">Mikoposoft </span>
                         </Link>
                         <Button
-                            variant="outline"
                             size="icon"
                             className="ml-auto h-8 w-8"
                         >

@@ -2,7 +2,6 @@ import { Link } from "@inertiajs/react";
 import {
     Home,
     ShoppingCart,
-    Badge,
     Package,
     Users,
     LineChart,
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/accordion";
 
 import React from "react";
+import { Badge } from "./ui/badge";
 
 const Sidebar = () => {
     return (
