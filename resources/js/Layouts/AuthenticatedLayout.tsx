@@ -96,13 +96,13 @@ export default function Authenticated({
                                 size="icon"
                                 className="shrink-0 md:hidden"
                             >
-                                <Menu className="h-5 w-5" />
+                                <Menu className="h-5 w-5 dark dark:text-white" />
                                 <span className="sr-only">
                                     Toggle navigation menu
                                 </span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className="flex flex-col">
+                        <SheetContent side="left" className="flex bg-cyan-950 dark flex-col">
                             <Sidebar />
                             <div className="mt-auto">
                                 <Card>
