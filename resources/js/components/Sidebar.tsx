@@ -56,14 +56,6 @@ const Sidebar = () => {
                                 <Minus className="h-4 w-4" />
                                 Loan Products
                             </Link>
-
-                            <Link
-                                href={route("loan-fees.index")}
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
-                            >
-                                <Minus className="h-4 w-4" />
-                                Loan Fees
-                            </Link>
                         </div>
                     </AccordionContent>
                 </AccordionItem>

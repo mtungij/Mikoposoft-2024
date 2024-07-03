@@ -42,6 +42,9 @@ class LoanCategoryController extends Controller
             'from' =>'required|numeric|max:100000000000',
             'to' =>'required|numeric|max:100000000000',
             'interest' =>'required|numeric|max:100',
+            'penalt_type' => 'required',
+            'penalt_amount' => 'required|numeric|max:1000000000',
+            'fee' => 'nullable|numeric|max:1000000000',
         ]);
 
         $validated['company_id'] = auth()->user()->company_id;
@@ -77,6 +80,9 @@ class LoanCategoryController extends Controller
             'from' =>'required|numeric|max:100000000000',
             'to' =>'required|numeric|max:100000000000|gt:from',
             'interest' =>'required|numeric|max:100',
+            'penalt_type' => 'required',
+            'penalt_amount' => 'required|numeric|max:1000000000',
+            'fee' => 'nullable|numeric|max:1000000000',
         ]);
 
         $loanProduct->update($validated);
