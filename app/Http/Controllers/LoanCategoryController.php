@@ -14,8 +14,13 @@ class LoanCategoryController extends Controller
      */
     public function index(): Response
     {
+        $loanProducts = LoanCategory::where('company_id', auth()->user()->company_id)->get();
+
+        if(request()->search) {
+            $loanProducts = LoanCategory::where('company_id', auth()->user()->company_id)->where('name', 'like', '%'. request()->search. '%')->get();
+        }
         return Inertia::render('LoanProduct/Index', [
-            'loanProducts' => LoanCategory::where('company_id', auth()->user()->company_id)->get(),
+            'loanProducts' => $loanProducts,
         ]);
     }
 

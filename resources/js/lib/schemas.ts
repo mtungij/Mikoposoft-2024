@@ -15,3 +15,12 @@ export interface Formula {
     company_id: number;
     name: string;
 }
+
+export interface LoanFee {
+    id: number;
+    company_id: number;
+    category: string;
+    fee_type: string;
+    desc: string;
+    fee_amount: number;
+}
