@@ -94,8 +94,8 @@ const Index = ({
                                         {loanProduct.interest}%
                                     </TableCell>
                                     <TableCell>{loanProduct.penalt_type}</TableCell>
-                                    <TableCell>{loanProduct.penalt_amount}</TableCell>
-                                    <TableCell>{loanProduct.fee}</TableCell>
+                                    <TableCell>{formatNumber(loanProduct.penalt_amount)}{loanProduct.penalt_type == 'percentage' && '%'}</TableCell>
+                                    <TableCell>{formatNumber(loanProduct.fee)}</TableCell>
                                     <TableCell className="flex gap-2 items-center">
                                         <EditLoanProduct
                                             loanProduct={loanProduct}

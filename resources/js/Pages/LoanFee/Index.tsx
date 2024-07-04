@@ -16,8 +16,14 @@ import { formatNumber } from "@/lib/utils";
 import CreateLoanFee from "./actions/CreateLoanFee";
 import EditLoanFee from "./actions/EditLoanFee";
 import { Edit, KeyRoundIcon } from "lucide-react";
+import ChangeCategory from "./actions/ChangeCategory";
+import LoanCategoryFees from "./actions/LoanCategoryFees";
 
-const Index = ({ auth, loanFees }: PageProps<{ loanFees: LoanFee[] }>) => {
+const Index = ({
+    auth,
+    loanFees,
+    loanProducts,
+}: PageProps<{ loanFees: LoanFee[]; loanProducts: LoanProduct[] }>) => {
     return (
         <Authenticated user={auth.user}>
             <Head title="Loan Product" />
@@ -29,49 +35,57 @@ const Index = ({ auth, loanFees }: PageProps<{ loanFees: LoanFee[] }>) => {
                     </h2>
                 </div>
                 <div className="w-full flex items-center gap-4 pb-5">
-                    <EditLoanFee loanFee={loanFees[0]} />
+                    {loanFees.length && loanFees[0]?.category === "general" && (
+                        <EditLoanFee loanFee={loanFees[0]} />
+                    )}
+                    {loanFees.length && (
+                        <ChangeCategory loanFee={loanFees[0]} />
+                    )}
 
-                    <Button size={"sm"} variant={"outline"} className="w-fit">
-                        <KeyRoundIcon className="size-5" />
-                        Change category
-                    </Button>
-
-                    <div className="flex md:justify-end">
-                        <CreateLoanFee />
+                    {loanFees.length < 1 && <CreateLoanFee />}
+                </div>
+                {loanFees.length && (
+                    <div className=" rounded-md">
+                        {loanFees[0].category == "general" ? (
+                            <table className="w-full border-collapse border">
+                                <tr>
+                                    <th className="border p-4 text-left bg-cyan-200">
+                                        CATEGORY
+                                    </th>
+                                    <td className="border p-4 text-left">
+                                        {loanFees[0].category}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className="border p-4 text-left">
+                                        FEE TYPE
+                                    </th>
+                                    <td className="border p-4 text-left">
+                                        {loanFees[0].fee_type}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className="border p-4 text-left">
+                                        DESCRIPTION
+                                    </th>
+                                    <td className="border p-4 text-left">
+                                        {loanFees[0].desc}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className="border p-4 text-left">
+                                        FEE AMOUNT
+                                    </th>
+                                    <td className="border p-4 text-left">
+                                        {loanFees[0].fee_amount}
+                                    </td>
+                                </tr>
+                            </table>
+                        ) : (
+                            <LoanCategoryFees loanProducts={loanProducts} />
+                        )}
                     </div>
-                </div>
-                <div className=" rounded-md">
-                    <table className="w-full border-collapse border">
-                        <tr>
-                            <th className="border p-4 text-left bg-cyan-200">
-                                CATEGORY
-                            </th>
-                            <td className="border p-4 text-left">
-                                {loanFees[0].category}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className="border p-4 text-left">FEE TYPE</th>
-                            <td className="border p-4 text-left">
-                                {loanFees[0].fee_type}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className="border p-4 text-left">
-                                DESCRIPTION
-                            </th>
-                            <td className="border p-4 text-left">
-                                {loanFees[0].desc}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className="border p-4 text-left">FEE AMOUNT</th>
-                            <td className="border p-4 text-left">
-                                {loanFees[0].fee_amount}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                )}
             </section>
         </Authenticated>
     );

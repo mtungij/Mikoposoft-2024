@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Edit, Fence, RefreshCw } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -23,24 +24,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { LoanFee } from "@/lib/schemas";
 
-const CreateLoanFee = () => {
+const ChangeCategory = ({ loanFee }: { loanFee: LoanFee }) => {
     const [open, setOpen] = useState(false);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        category: "",
-        fee_type: "",
-        desc: "",
-        fee_amount: "",
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        category: loanFee.category,
+        fee_type: loanFee.fee_type,
+        desc: loanFee.desc,
+        fee_amount: loanFee.fee_amount as any,
     });
 
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        post(route("loan-fees.store"), {
+        patch(route("loan-fees.update", loanFee.id), {
             onSuccess: () => {
                 reset();
-                toast.success("Loan fee created successfully");
+                toast.success("Loan category changed successfully");
                 setOpen(false);
             },
         });
@@ -49,11 +51,14 @@ const CreateLoanFee = () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Create Loan Fee</Button>
+                <Button variant={'outline'}>
+                    <RefreshCw className="size-4 mr-2" />
+                    Change Category
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>Create Loan Fee</DialogTitle>
+                    <DialogTitle>Change Category</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={submit}>
                     <div className="grid grid-cols-1 gap-4 py-4">
@@ -61,6 +66,7 @@ const CreateLoanFee = () => {
                             <Label htmlFor="category">Category</Label>
                             <Select
                                 name="category"
+                                value={data.category}
                                 onValueChange={(value) =>
                                     setData("category", value)
                                 }
@@ -97,4 +103,4 @@ const CreateLoanFee = () => {
     );
 };
 
-export default CreateLoanFee;
+export default ChangeCategory;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoanCategory;
 use App\Models\LoanCategoryFee;
 use Illuminate\Http\Request;
 use App\Models\LoanFee;
@@ -16,6 +17,7 @@ class LoanFeeController extends Controller
     {
         return Inertia::render('LoanFee/Index',[
             'loanFees' => LoanFee::where('company_id', auth()->user()->company_id)->get(),
+            'loanProducts' => LoanCategory::where('company_id', auth()->user()->company_id)->get(),
         ]);
     
     }
@@ -72,7 +74,7 @@ class LoanFeeController extends Controller
     {
         $validated = $request->validate([
             'category'=> 'required|max:255',
-            'fee_type'=> 'required',
+            'fee_type'=> 'nullable',
             'desc'=> 'nullable',
             'fee_amount'=> 'nullable|numeric|max:1000000000',
         ]);

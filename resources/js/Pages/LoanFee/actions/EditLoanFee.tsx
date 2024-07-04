@@ -65,6 +65,7 @@ const EditLoanFee = ({ loanFee }: { loanFee: LoanFee }) => {
                             <Label htmlFor="category">Category</Label>
                             <Select
                                 name="category"
+                                value={data.category}
                                 onValueChange={(value) =>
                                     setData("category", value)
                                 }
