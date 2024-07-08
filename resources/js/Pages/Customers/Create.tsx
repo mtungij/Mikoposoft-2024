@@ -54,9 +54,6 @@ const CreateCustomer = ({
         img_url: "" as any,
     });
 
-    const { isLastStep } = useStepper();
-    
-    
     const submit = (event: FormEvent) => {
         event.preventDefault();
         console.log(data.img_url);
@@ -71,7 +68,7 @@ const CreateCustomer = ({
 
     return (
         <Authenticated user={auth.user}>
-            <Head title="Create User" />
+            <Head title="Create customer" />
 
             <div>
                 <form onSubmit={submit} className="grid">
@@ -555,20 +552,6 @@ const CreateCustomer = ({
                             <Footer />
                         </Stepper>
                     </div>
-                    {isLastStep && (
-                        <div className="flex gap-4 my-4">
-                            <Button
-                                disabled={processing}
-                                type="button"
-                                variant={"outline"}
-                                onClick={() =>
-                                    router.visit(route("customers.index"))
-                                }
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                    )}
                 </form>
             </div>
         </Authenticated>
@@ -600,7 +583,7 @@ const Footer = () => {
                 {hasCompletedAllSteps ? (
                     <>
                         <Button size="sm" className="hidden">
-                             Submit
+                            Submit
                         </Button>
                         <Button size="sm" onClick={resetSteps}>
                             Reset
