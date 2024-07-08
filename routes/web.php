@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Employee;
 use App\Http\Controllers\InterestFormular;
 use App\Http\Controllers\InterestFormularController;
 use App\Http\Controllers\LoanCategoryController;
 use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\RemoveCommaFromInput;
 use App\Models\LoanCategory;
+use App\Models\TransactionAccountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,6 +49,18 @@ Route::resource('/loan-fees', LoanFeeController::class)
 Route::resource('/formulas',InterestFormularController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','destroy']);
+
+Route::resource('/transanctions',TransactionController::class)
+    ->middleware(['auth','verified'])
+    ->only(['index','store','destroy']);
+
+Route::resource('/branches',BranchController::class)
+    ->middleware(['auth','verified'])
+    ->only(['index','store','update']);
+
+    Route::resource('/customers',CustomerController::class)
+    ->middleware(['auth','verified'])
+    ->only(['index','store','update','destroy']);
 
 
 require __DIR__.'/auth.php';

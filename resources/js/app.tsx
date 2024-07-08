@@ -25,7 +25,7 @@ createInertiaApp({
                         storageKey="vite-ui-theme"
                     >
                         <App {...props} />
-                        <Toaster position={"top-right"} />
+                        <Toaster expand position={"top-right"} />
                     </ThemeProvider>
                 </>
             );

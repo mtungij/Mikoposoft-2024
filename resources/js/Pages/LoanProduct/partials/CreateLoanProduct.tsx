@@ -15,7 +15,13 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { PlusCircle } from "lucide-react";
 
 export function CreateLoanProduct() {
@@ -66,7 +72,7 @@ export function CreateLoanProduct() {
                 <form onSubmit={submit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
                         <div className="space-y-2">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name">Loan Product Name</Label>
                             <Input
                                 id="name"
                                 name="name"

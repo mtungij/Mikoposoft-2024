@@ -24,3 +24,26 @@ export interface LoanFee {
     desc: string;
     fee_amount: number;
 }
+
+export interface Transaction {
+    id: number;
+    company_id: number;
+    name: string;
+    created_at: string;
+}
+
+export interface Region {
+    id: number;
+    name: string;
+}
+
+export interface Branch {
+    id: number;
+    region_id: number;
+    company_id: number;
+    name: string;
+    region: Region;
+    phone: string;
+    email: string;
+    status: string;
+}

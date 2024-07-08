@@ -3,7 +3,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Table,
+    Table,          
     TableBody,
     TableCell,
     TableHead,
@@ -136,3 +136,6 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
 };
 
 export default Index;
+
+
+

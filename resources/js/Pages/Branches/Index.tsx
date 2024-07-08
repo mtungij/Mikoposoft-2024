@@ -11,26 +11,32 @@ import {
 } from "@/components/ui/table";
 import { PageProps } from "@/types";
 import { Head, router } from "@inertiajs/react";
-import { Edit } from "lucide-react";
+import {
+    BanIcon,
+    BookmarkIcon,
+    CheckCheck,
+    Edit,
+    SquareCheckBig,
+} from "lucide-react";
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { DeleteUser } from "../Employees/partials/Deleteuser";
-import { LoanProduct } from "@/lib/schemas";
-import { CreateLoanProduct } from "./partials/CreateLoanProduct";
-import { formatNumber } from "@/lib/utils";
-import { EditLoanProduct } from "./partials/EditLoanProduct";
+import { Branch, LoanProduct, Region } from "@/lib/schemas";
+import { CreateBranch } from "./actions/CreateBranch";
+import { Badge } from "@/components/ui/badge";
 
 const Index = ({
     auth,
-    loanProducts,
-}: PageProps<{ loanProducts: LoanProduct[] }>) => {
-    const searchLoanProduct = useDebouncedCallback(
+    branches,
+    regions,
+}: PageProps<{ branches: Branch[]; regions: Region[] }>) => {
+    const searchBranch = useDebouncedCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.value === "") {
-                router.visit(route("loan-products.index"));
+                router.visit(route("branches.index"));
             } else {
                 router.visit(
-                    route("loan-products.index", {
+                    route("branches.index", {
                         search: event.target.value,
                     }),
                     {
@@ -43,12 +49,12 @@ const Index = ({
     );
     return (
         <Authenticated user={auth.user}>
-            <Head title="Loan Product" />
+            <Head title="Branches" />
 
             <section className="bg-white p-5 rounded-md md:shadow-lg">
                 <div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                        Loan Products
+                        Branches
                     </h2>
                 </div>
                 <div className="w-full grid md:grid-cols-2 items-center gap-4 pb-5">
@@ -57,11 +63,11 @@ const Index = ({
                         name="search"
                         className="max-w-sm"
                         placeholder="Search..."
-                        onChange={searchLoanProduct}
+                        onChange={searchBranch}
                     />
 
                     <div className="flex md:justify-end">
-                        <CreateLoanProduct />
+                        <CreateBranch regions={regions} />
                     </div>
                 </div>
                 <div className="border border-gray-200 dark:border-gray-700 rounded-md">
@@ -69,47 +75,35 @@ const Index = ({
                         <TableHeader>
                             <TableRow>
                                 <TableHead>#</TableHead>
-                                <TableHead>Product Name</TableHead>
-                                <TableHead>Minimum</TableHead>
-                                <TableHead>Maximum</TableHead>
-                                <TableHead>Interest</TableHead>
-                                <TableHead>Penalt Type</TableHead>
-                                <TableHead>Penalt Amount</TableHead>
-                                <TableHead>Loan Fee</TableHead>
+                                <TableHead>Branch Name</TableHead>
+                                <TableHead>Phone Number</TableHead>
+                                <TableHead>Address</TableHead>
+                                <TableHead>Status</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {loanProducts.map((loanProduct, index) => (
+                            {branches.map((branch, index) => (
                                 <TableRow>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{loanProduct.name}</TableCell>
+                                    <TableCell>{branch.name}</TableCell>
+                                    <TableCell>{branch.phone}</TableCell>
                                     <TableCell>
-                                        {formatNumber(loanProduct.from)}
+                                        {branch?.region?.name}
                                     </TableCell>
+
                                     <TableCell>
-                                        {formatNumber(loanProduct.to)}
-                                    </TableCell>
-                                    <TableCell>
-                                        {loanProduct.interest}%
-                                    </TableCell>
-                                    <TableCell>
-                                        {loanProduct.penalt_type}
-                                    </TableCell>
-                                    <TableCell>
-                                        {formatNumber(
-                                            loanProduct.penalt_amount
+                                        {branch.status == "active" ? (
+                                            <SquareCheckBig className="size-6 text-green-500" />
+                                        ) : (
+                                            <BanIcon className="size-6 text-red-500" />
                                         )}
-                                        {loanProduct.penalt_type ==
-                                            "percentage" && "%"}
                                     </TableCell>
-                                    <TableCell>
-                                        {formatNumber(loanProduct.fee)}
-                                    </TableCell>
+
                                     <TableCell className="flex gap-2 items-center">
-                                        <EditLoanProduct
+                                        {/* <EditLoanProduct
                                             loanProduct={loanProduct}
-                                        />
+                                        /> */}
                                     </TableCell>
                                 </TableRow>
                             ))}
