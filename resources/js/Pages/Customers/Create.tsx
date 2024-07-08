@@ -544,6 +544,7 @@ const CreateCustomer = ({
                                 <UserProfile
                                     value={data.img_url}
                                     onChange={(event) =>
+                                        event?.target.files &&
                                         setData(
                                             "img_url",
                                             event.target.files[0]
