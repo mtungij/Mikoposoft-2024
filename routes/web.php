@@ -65,7 +65,7 @@ Route::resource('/branches',BranchController::class)
 
 Route::resource('/customers',CustomerController::class)
     ->middleware(['auth','verified'])
-    ->only(['index','store','update','destroy']);
+    ->only(['index', 'create', 'edit', 'view', 'store','update','destroy']);
 
 
 require __DIR__.'/auth.php';

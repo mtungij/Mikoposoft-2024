@@ -36,32 +36,7 @@ export interface User {
     email_verified_at: string;
 }
 
-export interface customer{
-    id: number;
-    user: User;
-    branch: Branch;
-    c_number: string;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    phone: string;
-    ward: string;
-    street: string;
-    id_type: string;
-    id_number:number;
-    nick_name: string;
-    status:string;
-    marital_status: string;
-    working_status: string;
-    business_type: string;
-    business_location:string;
-    monthly_income: number;
-    account_type: string;
-    img_url: string;
-    full_name: string;
-    created_at: string;
-    
-}
+
 
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>

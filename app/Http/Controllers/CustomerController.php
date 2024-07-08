@@ -13,18 +13,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        // $customers = Customer::with('branch')->where('company_id', auth()->user()->company_id)->get();
-        //      if(request()->search) {
-        //     $customers = Customer::where('company_id', auth()->user()->company_id)->where('name', 'like', '%'. request()->search. '%')->get();
-        // }
-
-        $branchId = auth()->user()->company_id;
+        $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->get();
+        if(request()->search) {
+            $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->where('name', 'like', '%'. request()->search. '%')->get();
+        }
 
          return Inertia::render("Customers/Index",[
-            "customers"=> Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->get(),
+            "customers"=> $customers,
          ]);
-
-         
     }
 
     /**
@@ -32,7 +28,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Customers/Create');
     }
 
     /**

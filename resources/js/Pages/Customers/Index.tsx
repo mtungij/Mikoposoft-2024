@@ -11,23 +11,16 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { customer, PageProps, User } from "@/types";
+import { PageProps, User } from "@/types";
 import { Head, router, useForm } from "@inertiajs/react";
-import {
-    BadgeAlertIcon,
-    BanIcon,
-    BatteryLowIcon,
-    Edit,
-    PlusCircle,
-    SignalLowIcon,
-    SquareActivity,
-    Trash,
-} from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import React, { FormEvent } from "react";
 import { toast } from "sonner";
 import { DeleteCustomer } from "./actions/DeleteCustomer";
+import { useDebouncedCallback } from "use-debounce";
+import { Customer } from "@/lib/schemas";
 
-const Index = ({ auth, customers }: PageProps<{ customers: customer[] }>) => {
+const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
     const { data, setData, post, errors, processing, reset } = useForm({
         name: "",
     });
@@ -41,23 +34,23 @@ const Index = ({ auth, customers }: PageProps<{ customers: customer[] }>) => {
         reset();
     };
 
-    // const searchUser = useDebouncedCallback(
-    //     (event: React.ChangeEvent<HTMLInputElement>) => {
-    //         if (event.target.value === "") {
-    //             router.visit(route("employees.index"));
-    //         } else {
-    //             router.visit(
-    //                 route("employees.index", {
-    //                     search: event.target.value,
-    //                 }),
-    //                 {
-    //                     preserveState: true,
-    //                 }
-    //             );
-    //         }
-    //     },
-    //     1000
-    // );
+    const searchCustomer = useDebouncedCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            if (event.target.value === "") {
+                router.visit(route("customers.index"));
+            } else {
+                router.visit(
+                    route("customers.index", {
+                        search: event.target.value,
+                    }),
+                    {
+                        preserveState: true,
+                    }
+                );
+            }
+        },
+        1000
+    );
 
     return (
         <Authenticated user={auth.user}>
@@ -69,19 +62,19 @@ const Index = ({ auth, customers }: PageProps<{ customers: customer[] }>) => {
                         Customers
                     </h2>
                 </div>
-                {/* <div className="w-full grid md:grid-cols-2 items-center gap-4 pb-5">
+                <div className="w-full grid md:grid-cols-2 items-center gap-4 pb-5">
                     <Input
                         type="search"
                         name="search"
                         className="max-w-sm"
                         placeholder="Search..."
-                        onChange={searchUser}
+                        // onChange={searchUser}
                     />
 
                     <div className="flex md:justify-end">
                         <Button
                             onClick={() =>
-                                router.visit(route("employees.create"))
+                                router.visit(route("customers.create"))
                             }
                             className="w-full md:w-fit"
                         >
@@ -89,7 +82,7 @@ const Index = ({ auth, customers }: PageProps<{ customers: customer[] }>) => {
                             Create Employee
                         </Button>
                     </div>
-                </div> */}
+                </div>
                 <div className="border border-gray-200 rounded-md">
                     <Table>
                         <TableHeader>
