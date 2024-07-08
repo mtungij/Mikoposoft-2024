@@ -46,7 +46,7 @@ export default function Authenticated({
 
     return (
         <div className="grid min-h-screen bg-transparent dark:bg-gray-900  w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-            <div className="hidden border-r md:block">
+            <div className="hidden border-r border-cyan-900 md:block">
                 <div className="flex sticky top-0 items-start h-full max-h-screen bg-cyan-950 dark flex-col gap-2">
                     <div className="flex justify-between w-full h-14 items-center border-b border-gray-700 px-4 lg:h-[60px] lg:px-6">
                         <Link
@@ -129,7 +129,7 @@ export default function Authenticated({
                                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                                 <Input
                                     type="search"
-                                    placeholder="Search products..."
+                                    placeholder="Search..."
                                     className="w-full appearance-none bg-cyan-900 pl-8 shadow-none md:w-2/3 lg:w-1/3"
                                 />
                             </div>
@@ -140,7 +140,6 @@ export default function Authenticated({
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
-                                    variant="secondary"
                                     size="icon"
                                     className="rounded-full"
                                 >

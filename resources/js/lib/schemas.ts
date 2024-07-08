@@ -1,6 +1,9 @@
+import { LoanCategoryFee } from "./fee-schema";
+
 export interface LoanProduct {
     id: number;
     company_id: number;
+    loan_category_fees: LoanCategoryFee[];
     name: string;
     from: number;
     to: number;
