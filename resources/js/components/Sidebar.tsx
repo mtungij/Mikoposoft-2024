@@ -73,7 +73,7 @@ const Sidebar = () => {
                             </Link>
 
                             <Link
-                                href={route("transactions.index")}
+                                href={route("transanctions.index")}
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
                             >
                                 <Minus className="h-4 w-4" />
@@ -93,6 +93,13 @@ const Sidebar = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+            <Link
+                href="#"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+            >
+                <Users className="h-4 w-4" />
+                Customers
+            </Link>
 
             <Accordion type="single" collapsible className="w-full px-3 py-2">
                 <AccordionItem value="item-1" className="w-full">
