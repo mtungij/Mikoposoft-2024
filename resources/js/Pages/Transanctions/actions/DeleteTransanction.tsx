@@ -16,7 +16,11 @@ import { router } from "@inertiajs/react";
 import { Edit, Trash } from "lucide-react";
 import { toast } from "sonner";
 
-export function DeleteTransanction({ transanction }: { transanction: Transaction }) {
+export function DeleteTransanction({
+    transanction,
+}: {
+    transanction: Transaction;
+}) {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -33,7 +37,7 @@ export function DeleteTransanction({ transanction }: { transanction: Transaction
                         This action cannot be undone. This will permanently
                         delete{" "}
                         <b className="text-red-800 uppercase">
-                            {transanction.name} 
+                            {transanction.name}
                         </b>{" "}
                         and remove data from our servers.
                     </AlertDialogDescription>
@@ -45,7 +49,7 @@ export function DeleteTransanction({ transanction }: { transanction: Transaction
                         onClick={() =>
                             router.delete(
                                 route("transactions.destroy", {
-                                    transanction: transanction,
+                                    transaction: transanction,
                                 }),
                                 {
                                     onSuccess: () => {

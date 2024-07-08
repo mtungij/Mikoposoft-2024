@@ -80,8 +80,8 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TransactionAccount $transanction)
+    public function destroy(TransactionAccount $transaction)
     {
-        $transanction->delete();
+        $transaction->delete();
     }
 }
