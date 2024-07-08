@@ -24,6 +24,8 @@ const Index = ({
     loanFees,
     loanProducts,
 }: PageProps<{ loanFees: LoanFee[]; loanProducts: LoanProduct[] }>) => {
+    console.log(loanProducts);
+    
     return (
         <Authenticated user={auth.user}>
             <Head title="Loan Product" />

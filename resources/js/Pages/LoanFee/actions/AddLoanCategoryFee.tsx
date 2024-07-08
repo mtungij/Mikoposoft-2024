@@ -1,3 +1,4 @@
+import React from "react";
 import InputError from "@/Components/InputError";
 import { Button } from "@/components/ui/button";
 import { NumericFormat } from "react-number-format";
@@ -15,8 +16,6 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { LoanProduct } from "@/lib/schemas";
-import { Edit, Edit2Icon } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -24,24 +23,26 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { LoanCategoryFee } from "@/lib/fee-schema";
+import { LoanProduct } from "@/lib/schemas";
+import { PlusCircleIcon } from "lucide-react";
 
-export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: LoanCategoryFee }) {
+const AddLoanCategoryFee = ({ loanCategory }: { loanCategory: LoanProduct }) => {
     const [open, setOpen] = useState(false);
 
-    const { data, setData, patch, processing, errors, reset } = useForm({
-        loan_category_id: loanCategoryFee.loan_category.id,
-        fee_type: loanCategoryFee.fee_type,
-        desc: loanCategoryFee.desc,
-        fee_amount: loanCategoryFee.fee_amount as any,
+    const { data, setData, post, processing, errors, reset } = useForm({
+        loan_category_id: loanCategory.id,
+        fee_type: "",
+        desc: "",
+        fee_amount: "",
     });
 
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        patch(route("loan-category-fees.update", loanCategoryFee.id), {
+        post(route("loan-category-fees.store"), {
             onSuccess: () => {
-                toast.success("Loan Fee updated successfully");
+                reset();
+                toast.success("Loan fee added successfully");
                 setOpen(false);
             },
             preserveScroll: true,
@@ -51,19 +52,16 @@ export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: Loan
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button
-                    size={"icon"}
-                    className="text-cyan-500"
-                    variant={"outline"}
-                >
-                    <Edit className="size-4 stroke-2" />
+                <Button>
+                    <PlusCircleIcon className="size-4 mr-2" />
+                    Add
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
                     <DialogTitle>
-                        Edit loan fee to{" "}
-                        <b className="underline">{loanCategoryFee.loan_category.name}</b>
+                        Add loan fee to{" "}
+                        <b className="underline">{loanCategory.name}</b>
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={submit}>
@@ -80,7 +78,7 @@ export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: Loan
                             />
                             <InputError message={errors.desc} />
                         </div>
-
+                        
                         <div className="space-y-2">
                             <Label htmlFor="fee_type">Fee type</Label>
                             <Select
@@ -135,4 +133,6 @@ export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: Loan
             </DialogContent>
         </Dialog>
     );
-}
+};
+
+export default AddLoanCategoryFee;

@@ -4,6 +4,7 @@ use App\Http\Controllers\Employee;
 use App\Http\Controllers\InterestFormular;
 use App\Http\Controllers\InterestFormularController;
 use App\Http\Controllers\LoanCategoryController;
+use App\Http\Controllers\LoanCategoryFeeController;
 use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RemoveCommaFromInput;
@@ -41,6 +42,10 @@ Route::resource('/loan-products', LoanCategoryController::class)
 Route::resource('/loan-fees', LoanFeeController::class)
     ->middleware(['auth','verified', RemoveCommaFromInput::class])
     ->only(['index','store','update']);
+
+Route::resource('/loan-category-fees', LoanCategoryFeeController::class)
+    ->only(['store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified', RemoveCommaFromInput::class]);
 
 Route::resource('/formulas',InterestFormularController::class)
     ->middleware(['auth','verified'])
