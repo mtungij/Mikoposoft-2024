@@ -24,11 +24,11 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-const CreateLoanFee = () => {
+const CreateLoanFeeByGeneral = () => {
     const [open, setOpen] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        category: "",
+        category: "general",
         fee_type: "",
         desc: "",
         fee_amount: "",
@@ -65,6 +65,7 @@ const CreateLoanFee = () => {
                                 onValueChange={(value) =>
                                     setData("category", value)
                                 }
+                                disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue
@@ -86,6 +87,62 @@ const CreateLoanFee = () => {
                             </Select>
                             <InputError message={errors.category} />
                         </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="fee_type">Fee type</Label>
+                            <Select
+                                name="fee_type"
+                                onValueChange={(value) =>
+                                    setData("fee_type", value)
+                                }
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue
+                                        id="fee_type"
+                                        placeholder="Select fee_type"
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem key="money" value="money">
+                                        Money Value
+                                    </SelectItem>
+                                    <SelectItem
+                                        key="percentage"
+                                        value="percentage"
+                                    >
+                                        Percentage value
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <InputError message={errors.fee_type} />
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="desc">Description</Label>
+                            <Input
+                                id="desc"
+                                value={data.desc}
+                                onChange={(e) =>
+                                    setData("desc", e.target.value)
+                                }
+                                className="col-span-3"
+                            />
+                            <InputError message={errors.desc} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="fee_amount">Fee amount</Label>
+                            <NumericFormat
+                                customInput={Input}
+                                thousandSeparator=","
+                                allowNegative={false}
+                                id="fee_amount"
+                                value={data.fee_amount}
+                                onChange={(e) =>
+                                    setData("fee_amount", e.target.value)
+                                }
+                                className="col-span-3"
+                            />
+                            <InputError message={errors.fee_amount} />
+                        </div>
                     </div>
                     <DialogFooter>
                         <Button disabled={processing} type="submit">
@@ -98,4 +155,4 @@ const CreateLoanFee = () => {
     );
 };
 
-export default CreateLoanFee;
+export default CreateLoanFeeByGeneral;

@@ -18,6 +18,7 @@ import EditLoanFee from "./actions/EditLoanFee";
 import { Edit, KeyRoundIcon } from "lucide-react";
 import ChangeCategory from "./actions/ChangeCategory";
 import LoanCategoryFees from "./actions/LoanCategoryFees";
+import CreateLoanFeeByGeneral from "./actions/CreateLoanFeeByGeneral";
 
 const Index = ({
     auth,
@@ -25,7 +26,7 @@ const Index = ({
     loanProducts,
 }: PageProps<{ loanFees: LoanFee[]; loanProducts: LoanProduct[] }>) => {
     console.log(loanProducts);
-    
+
     return (
         <Authenticated user={auth.user}>
             <Head title="Loan Product" />
@@ -37,11 +38,12 @@ const Index = ({
                     </h2>
                 </div>
                 <div className="w-full flex items-center gap-4 pb-5">
-                    {loanFees.length && loanFees[0]?.category === "general" && (
-                        <EditLoanFee loanFee={loanFees[0]} />
-                    )}
                     {loanFees.length && (
                         <ChangeCategory loanFee={loanFees[0]} />
+                    )}
+
+                    {loanFees.length && loanFees[0].category == "general" && (
+                        <CreateLoanFeeByGeneral />
                     )}
 
                     {loanFees.length < 1 && <CreateLoanFee />}
@@ -49,40 +51,49 @@ const Index = ({
                 {loanFees.length && (
                     <div className=" rounded-md">
                         {loanFees[0].category == "general" ? (
-                            <table className="w-full border-collapse border">
-                                <tr>
-                                    <th className="border p-4 text-left bg-cyan-200">
-                                        CATEGORY
-                                    </th>
-                                    <td className="border p-4 text-left">
-                                        {loanFees[0].category}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className="border p-4 text-left">
-                                        FEE TYPE
-                                    </th>
-                                    <td className="border p-4 text-left">
-                                        {loanFees[0].fee_type}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className="border p-4 text-left">
-                                        DESCRIPTION
-                                    </th>
-                                    <td className="border p-4 text-left">
-                                        {loanFees[0].desc}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className="border p-4 text-left">
-                                        FEE AMOUNT
-                                    </th>
-                                    <td className="border p-4 text-left">
-                                        {loanFees[0].fee_amount}
-                                    </td>
-                                </tr>
-                            </table>
+                            <div className="border border-gray-200 dark:border-gray-700 rounded-md">
+                                <Table>
+                                    <TableHeader>
+                                        <TableHead>#</TableHead>
+                                        <TableHead>Description</TableHead>
+                                        <TableHead>Fee Type</TableHead>
+                                        <TableHead>Fee Amount</TableHead>
+                                        <TableHead></TableHead>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {loanFees.length ? (
+                                            loanFees.map((loanFee, index) => (
+                                                <TableRow>
+                                                    <TableCell>
+                                                        {index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {loanFee.desc}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {loanFee.fee_type}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {formatNumber(
+                                                            loanFee.fee_amount
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <EditLoanFee
+                                                            loanFee={loanFee}
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <div className="w-full min-h-28 flex items-center justify-center">
+                                                No fees available for this loan
+                                                product.
+                                            </div>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         ) : (
                             <LoanCategoryFees loanProducts={loanProducts} />
                         )}
