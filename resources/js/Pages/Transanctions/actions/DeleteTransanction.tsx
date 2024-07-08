@@ -44,7 +44,7 @@ export function DeleteTransanction({ transanction }: { transanction: Transaction
                         className="bg-red-500 hover:bg-red-600"
                         onClick={() =>
                             router.delete(
-                                route("transanctions.destroy", {
+                                route("transactions.destroy", {
                                     transanction: transanction,
                                 }),
                                 {

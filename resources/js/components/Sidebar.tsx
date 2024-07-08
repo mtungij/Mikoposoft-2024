@@ -73,7 +73,7 @@ const Sidebar = () => {
                             </Link>
 
                             <Link
-                                href={route("transanctions.index")}
+                                href={route("transactions.index")}
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
                             >
                                 <Minus className="h-4 w-4" />

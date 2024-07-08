@@ -35,7 +35,7 @@ const CreateTransanction = () => {
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
         
-        post(route("transanctions.store"), {
+        post(route("transactions.store"), {
             onSuccess: () => setOpen(false)
         });
     };
