@@ -55,7 +55,7 @@ Route::resource('/formulas',InterestFormularController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','destroy']);
 
-Route::resource('/transanctions',TransactionController::class)
+Route::resource('/transactions',TransactionController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','destroy']);
 
@@ -63,7 +63,7 @@ Route::resource('/branches',BranchController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','update']);
 
-    Route::resource('/customers',CustomerController::class)
+Route::resource('/customers',CustomerController::class)
     ->middleware(['auth','verified'])
     ->only(['index','store','update','destroy']);
 
