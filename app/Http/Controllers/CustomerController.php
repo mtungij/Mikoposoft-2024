@@ -28,7 +28,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Customers/Create');
+
+        
     }
 
     /**
@@ -36,7 +37,35 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validatedData = request()->validate([
+            'c_number' =>'required',
+            'branch_id'=> 'required',
+            'user_id'=> 'required',
+            'first_name' =>'required',
+            'middle_name'=> 'required',
+            'last_name'=> 'required',
+            'gender'=> 'required',
+            'phone'=> 'required',
+            'ward'=> 'nullable',
+            'street'=> 'nullable',
+            'id_type'=> 'required',
+            'id_number'=> 'required',
+            'nick_name'=> 'nullable',
+            'marital_status'=> 'required',
+            'working_status'=> 'required',
+            'business_type'=> 'required',
+            'business_location'=> 'required',
+            'monthly_income'=> 'required',
+            'account_type'=> 'required',
+            'img_url'=> 'nullable',
+          ]);
+  
+          $validatedData['company_id'] = auth()->user()->company_id;
+  
+          Customer::create($validatedData);
+             
+          return redirect()->back();
     }
 
     /**
@@ -60,7 +89,32 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = request()->validate([
+            'c_number' =>'required',
+            'branch_id'=> 'required',
+            'user_id'=> 'required',
+            'first_name' =>'required',
+            'middle_name'=> 'required',
+            'last_name'=> 'required',
+            'gender'=> 'required',
+            'phone'=> 'required',
+            'ward'=> 'nullable',
+            'street'=> 'nullable',
+            'id_type'=> 'required',
+            'id_number'=> 'required',
+            'nick_name'=> 'nullable',
+            'marital_status'=> 'required',
+            'working_status'=> 'required',
+            'business_type'=> 'required',
+            'business_location'=> 'required',
+            'monthly_income'=> 'required',
+            'account_type'=> 'required',
+            'img_url'=> 'nullable',
+          ]);
+  
+          Customer::update($validatedData);
+             
+          return redirect()->back();
     }
 
     /**
