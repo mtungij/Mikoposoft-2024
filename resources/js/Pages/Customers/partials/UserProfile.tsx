@@ -59,6 +59,7 @@ export default function UserProfile({ onChange, value }: Props) {
                 >
                     <input
                         name="img_url"
+                        type="file"
                         value={value}
                         onChange={onChange}
                         {...getInputProps()}

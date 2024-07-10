@@ -31,15 +31,17 @@ const CreateCustomer = ({
     auth,
     branches,
     employees,
-}: PageProps<{ branches: Branch[]; employees: User[] }>) => {
+    c_number,
+}: PageProps<{ branches: Branch[]; employees: User[]; c_number: string }>) => {
     const { data, setData, post, errors, processing, reset } = useForm({
-        user_id: "",
-        branch_id: "",
-        c_number: "",
+        user_id: auth.user.position == 'admin' ? "": auth.user.id as any,
+        branch_id: auth.user.position == 'admin' ? "": auth.user.branch_id as any,
+        c_number: c_number,
         first_name: "",
         middle_name: "",
         last_name: "",
-        phone: "",
+        phone: "255",
+        gender: "",
         ward: "",
         street: "",
         id_type: "",
@@ -63,6 +65,9 @@ const CreateCustomer = ({
                 toast.success("Customer created successfully");
                 reset();
             },
+            onError: () => {
+                toast.error("Customer creation failed");
+            },
         });
     };
 
@@ -70,8 +75,12 @@ const CreateCustomer = ({
         <Authenticated user={auth.user}>
             <Head title="Create customer" />
 
-            <div>
-                <form onSubmit={submit} className="grid" encType="multipart/form-data">
+            <div className="p-4 md:p-0">
+                <form
+                    onSubmit={submit}
+                    className="grid"
+                    encType="multipart/form-data"
+                >
                     <div>
                         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
                             Create Customer
@@ -81,6 +90,27 @@ const CreateCustomer = ({
                         <Stepper initialStep={0} steps={steps}>
                             <Step>
                                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                    <div className="space-y-2">
+                                        <InputLabel
+                                            htmlFor="c_number"
+                                            value="Customer Number"
+                                        />
+                                        <Input
+                                            id="c_number"
+                                            value={data.c_number}
+                                            readOnly
+                                            onChange={(e) =>
+                                                setData(
+                                                    "c_number",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <InputError
+                                            message={errors.c_number}
+                                            className="mt-2"
+                                        />
+                                    </div>
                                     <div className="space-y-2">
                                         <InputLabel
                                             htmlFor="first_name"
@@ -95,6 +125,7 @@ const CreateCustomer = ({
                                                     e.target.value
                                                 )
                                             }
+                                            required
                                         />
                                         <InputError
                                             message={errors.first_name}
@@ -115,6 +146,7 @@ const CreateCustomer = ({
                                                     e.target.value
                                                 )
                                             }
+                                            required
                                         />
                                         <InputError
                                             message={errors.middle_name}
@@ -135,6 +167,7 @@ const CreateCustomer = ({
                                                     e.target.value
                                                 )
                                             }
+                                            required
                                         />
                                         <InputError
                                             message={errors.last_name}
@@ -147,10 +180,7 @@ const CreateCustomer = ({
                                             htmlFor="nick_name"
                                             value="Nick Name"
                                         />
-                                        <NumericFormat
-                                            customInput={Input}
-                                            thousandSeparator=","
-                                            allowNegative={false}
+                                        <Input
                                             id="nick_name"
                                             value={data.nick_name}
                                             onChange={(e) =>
@@ -176,6 +206,7 @@ const CreateCustomer = ({
                                             onChange={(e) =>
                                                 setData("phone", e.target.value)
                                             }
+                                            required
                                         />
                                         <InputError
                                             message={errors.phone}
@@ -185,19 +216,20 @@ const CreateCustomer = ({
 
                                     <div className="space-y-2">
                                         <InputLabel
-                                            htmlFor="branch_id"
-                                            value="Branch"
+                                            htmlFor="gender"
+                                            value="Gender"
                                         />
                                         <Select
-                                            value={data.branch_id}
-                                            name="branch_id"
+                                            value={data.gender}
+                                            name="gender"
                                             onValueChange={(value) =>
-                                                setData("branch_id", value)
+                                                setData("gender", value)
                                             }
+                                            required
                                         >
                                             <SelectTrigger className="w-full">
                                                 <SelectValue
-                                                    id="branch_id"
+                                                    id="gender"
                                                     placeholder="Select Branch"
                                                 />
                                             </SelectTrigger>
@@ -206,77 +238,146 @@ const CreateCustomer = ({
                                                     <SelectLabel>
                                                         Branches
                                                     </SelectLabel>
-                                                    {branches &&
-                                                        branches.map(
-                                                            (branch) => (
-                                                                <SelectItem
-                                                                    key={
-                                                                        branch.id
-                                                                    }
-                                                                    value={branch.id.toString()}
-                                                                >
-                                                                    {
-                                                                        branch.name
-                                                                    }
-                                                                </SelectItem>
-                                                            )
-                                                        )}
+                                                    <SelectItem
+                                                        key="male"
+                                                        value="male"
+                                                    >
+                                                        Male
+                                                    </SelectItem>
+                                                    <SelectItem
+                                                        key="female"
+                                                        value="female"
+                                                    >
+                                                        Female
+                                                    </SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>
                                         <InputError
-                                            message={errors.branch_id}
+                                            message={errors.gender}
                                             className="mt-2"
                                         />
                                     </div>
-
-                                    <div className="space-y-2">
-                                        <InputLabel
-                                            htmlFor="user_id"
-                                            value="Employee"
-                                        />
-                                        <Select
-                                            value={data.user_id}
-                                            name="user_id"
-                                            onValueChange={(value) =>
-                                                setData("user_id", value)
-                                            }
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue
-                                                    id="user_id"
-                                                    placeholder="Select employee"
+                                    {auth.user.position == "admin" ? (
+                                        <>
+                                            <div className="space-y-2">
+                                                <InputLabel
+                                                    htmlFor="branch_id"
+                                                    value="Branch"
                                                 />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    <SelectLabel>
-                                                        Branches
-                                                    </SelectLabel>
-                                                    {employees &&
-                                                        employees.map(
-                                                            (employee) => (
-                                                                <SelectItem
-                                                                    key={
-                                                                        employee.id
-                                                                    }
-                                                                    value={employee.id.toString()}
-                                                                >
-                                                                    {
-                                                                        employee.name
-                                                                    }
-                                                                </SelectItem>
-                                                            )
-                                                        )}
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                        <InputError
-                                            message={errors.user_id}
-                                            className="mt-2"
-                                        />
-                                    </div>
+                                                <Select
+                                                    value={data.branch_id}
+                                                    name="branch_id"
+                                                    onValueChange={(value) =>
+                                                        setData(
+                                                            "branch_id",
+                                                            value
+                                                        )
+                                                    }
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue
+                                                            id="branch_id"
+                                                            placeholder="Select Branch"
+                                                        />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>
+                                                                Branches
+                                                            </SelectLabel>
+                                                            {branches &&
+                                                                branches.map(
+                                                                    (
+                                                                        branch
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                branch.id
+                                                                            }
+                                                                            value={branch.id.toString()}
+                                                                        >
+                                                                            {
+                                                                                branch.name
+                                                                            }
+                                                                        </SelectItem>
+                                                                    )
+                                                                )}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                                <InputError
+                                                    message={errors.branch_id}
+                                                    className="mt-2"
+                                                />
+                                            </div>
 
+                                            <div className="space-y-2">
+                                                <InputLabel
+                                                    htmlFor="user_id"
+                                                    value="Employee"
+                                                />
+                                                <Select
+                                                    value={data.user_id}
+                                                    name="user_id"
+                                                    onValueChange={(value) =>
+                                                        setData(
+                                                            "user_id",
+                                                            value
+                                                        )
+                                                    }
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue
+                                                            id="user_id"
+                                                            placeholder="Select employee"
+                                                        />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>
+                                                                Branches
+                                                            </SelectLabel>
+                                                            {employees &&
+                                                                employees.map(
+                                                                    (
+                                                                        employee
+                                                                    ) => (
+                                                                        <SelectItem
+                                                                            key={
+                                                                                employee.id
+                                                                            }
+                                                                            value={employee.id.toString()}
+                                                                        >
+                                                                            {
+                                                                                employee.name
+                                                                            }
+                                                                        </SelectItem>
+                                                                    )
+                                                                )}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                                <InputError
+                                                    message={errors.user_id}
+                                                    className="mt-2"
+                                                />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <input
+                                                type="hidden"
+                                                name="branch_id"
+                                                value={data.branch_id}
+                                            />
+                                            <input
+                                                type="hidden"
+                                                name="user_id"
+                                                value={data.user_id}
+                                            />
+                                        </>
+                                    )}
                                     <div className="space-y-2">
                                         <InputLabel
                                             htmlFor="ward"
@@ -388,7 +489,7 @@ const CreateCustomer = ({
                                         />
                                         <Select
                                             value={data.id_type}
-                                            name="gender"
+                                            name="id_type"
                                             onValueChange={(value) =>
                                                 setData("id_type", value)
                                             }

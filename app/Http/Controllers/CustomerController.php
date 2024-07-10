@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,8 +30,12 @@ class CustomerController extends Controller
      */
     public function create()
     {
-
-        
+        $customers_count = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->count();
+        return Inertia::render("Customers/Create", [
+            'branches' => Branch::where('company_id', auth()->user()->company_id)->get(),
+            'employees' => User::where('company_id', auth()->user()->company_id)->get(),
+            'c_number' => 'C-'. date('Ym') . auth()->id() . "-". str_pad($customers_count + 1, 5, 0, STR_PAD_LEFT),
+        ]);
     }
 
     /**
@@ -46,7 +52,7 @@ class CustomerController extends Controller
             'middle_name'=> 'required',
             'last_name'=> 'required',
             'gender'=> 'required',
-            'phone'=> 'required',
+            'phone'=> 'required|string|max:12|min:12',
             'ward'=> 'nullable',
             'street'=> 'nullable',
             'id_type'=> 'required',
@@ -54,10 +60,9 @@ class CustomerController extends Controller
             'nick_name'=> 'nullable',
             'marital_status'=> 'required',
             'working_status'=> 'required',
-            'business_type'=> 'required',
+            'business_type'=> 'nullable',
             'business_location'=> 'required',
             'monthly_income'=> 'required',
-            'account_type'=> 'required',
             'img_url'=> 'nullable',
           ]);
   

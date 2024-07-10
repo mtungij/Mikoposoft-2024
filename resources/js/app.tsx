@@ -25,7 +25,7 @@ createInertiaApp({
                         storageKey="vite-ui-theme"
                     >
                         <App {...props} />
-                        <Toaster expand position={"top-right"} />
+                        <Toaster expand richColors position={"top-right"} />
                     </ThemeProvider>
                 </>
             );
@@ -37,7 +37,7 @@ createInertiaApp({
             <>
                 <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                     <App {...props} />
-                    <Toaster />
+                    <Toaster expand richColors position={"top-right"} />
                 </ThemeProvider>
             </>
         );

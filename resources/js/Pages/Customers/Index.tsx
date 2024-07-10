@@ -79,7 +79,7 @@ const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
                             className="w-full md:w-fit"
                         >
                             <PlusCircle className="size-4 mr-2" />
-                            Create Employee
+                            Create Customer
                         </Button>
                     </div>
                 </div>
@@ -99,7 +99,7 @@ const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
                         </TableHeader>
                         <TableBody>
                             {customers.map((customer, index) => (
-                                <TableRow>
+                                <TableRow key={customer.id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{customer.full_name}</TableCell>
                                     <TableCell>

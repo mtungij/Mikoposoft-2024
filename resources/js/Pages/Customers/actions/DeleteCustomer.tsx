@@ -10,12 +10,12 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { customer, User } from "@/types";
+import { Customer } from "@/lib/schemas";
 import { router } from "@inertiajs/react";
 import { Edit, Trash, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-export function DeleteCustomer({ customer }: { customer: customer }) {
+export function DeleteCustomer({ customer }: { customer: Customer }) {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -45,7 +45,7 @@ export function DeleteCustomer({ customer }: { customer: customer }) {
                                 {
                                     onSuccess: () => {
                                         toast.success(
-                                            "Employee deleted successfully"
+                                            "Customer deleted successfully"
                                         );
                                     },
                                 }

@@ -1,6 +1,12 @@
 import { User } from "@/types";
 import { LoanCategoryFee } from "./fee-schema";
 
+export type PaginationLink = {
+    url: string;
+    label: string;
+    active: boolean;
+};
+
 export interface LoanProduct {
     id: number;
     company_id: number;
@@ -51,6 +57,22 @@ export interface Branch {
     email: string;
     status: string;
 }
+
+export type paginatedOrder = {
+    data: Order[];
+    links: PaginationLink[];
+    current_page: number;
+    last_page: number;
+    first_page_url: string;
+    last_page_url: string;
+    prev_page_url: string;
+    next_page_url: string;
+    from: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+};
 
 export interface Customer {
     id: number;
