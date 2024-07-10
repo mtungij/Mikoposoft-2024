@@ -16,8 +16,8 @@ class LoanFeeController extends Controller
     public function index()
     {
         return Inertia::render('LoanFee/Index',[
-            'loanFees' => LoanFee::where('company_id', auth()->user()->company_id)->get(),
-            'loanProducts' => LoanCategory::where('company_id', auth()->user()->company_id)->get(),
+            'loanFees' => LoanFee::where('company_id', auth()->user()->company_id)->oldest()->get(),
+            'loanProducts' => LoanCategory::with('loanCategoryFees.loanCategory')->where('company_id', auth()->user()->company_id)->get(),
         ]);
     
     }

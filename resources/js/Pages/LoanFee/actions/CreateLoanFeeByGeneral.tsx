@@ -1,3 +1,4 @@
+import React from "react";
 import InputError from "@/Components/InputError";
 import { Button } from "@/components/ui/button";
 import { NumericFormat } from "react-number-format";
@@ -15,8 +16,6 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { LoanProduct } from "@/lib/schemas";
-import { Edit, Edit2Icon } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -24,63 +23,70 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { LoanCategoryFee } from "@/lib/fee-schema";
 
-export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: LoanCategoryFee }) {
+const CreateLoanFeeByGeneral = () => {
     const [open, setOpen] = useState(false);
 
-    const { data, setData, patch, processing, errors, reset } = useForm({
-        loan_category_id: loanCategoryFee.loan_category.id,
-        fee_type: loanCategoryFee.fee_type,
-        desc: loanCategoryFee.desc,
-        fee_amount: loanCategoryFee.fee_amount as any,
+    const { data, setData, post, processing, errors, reset } = useForm({
+        category: "general",
+        fee_type: "",
+        desc: "",
+        fee_amount: "",
     });
 
     const submit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        patch(route("loan-category-fees.update", loanCategoryFee.id), {
+        post(route("loan-fees.store"), {
             onSuccess: () => {
-                toast.success("Loan Fee updated successfully");
+                reset();
+                toast.success("Loan fee created successfully");
                 setOpen(false);
             },
-            preserveScroll: true,
         });
     };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button
-                    size={"icon"}
-                    className="text-cyan-500"
-                    variant={"outline"}
-                >
-                    <Edit className="size-4 stroke-2" />
-                </Button>
+                <Button>Create Loan Fee</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>
-                        Edit loan fee to{" "}
-                        <b className="underline">{loanCategoryFee.loan_category.name}</b>
-                    </DialogTitle>
+                    <DialogTitle>Create Loan Fee</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={submit}>
                     <div className="grid grid-cols-1 gap-4 py-4">
                         <div className="space-y-2">
-                            <Label htmlFor="desc">Description</Label>
-                            <Input
-                                id="desc"
-                                value={data.desc}
-                                onChange={(e) =>
-                                    setData("desc", e.target.value)
+                            <Label htmlFor="category">Category</Label>
+                            <Select
+                                name="category"
+                                value={data.category}
+                                onValueChange={(value) =>
+                                    setData("category", value)
                                 }
-                                className="col-span-3"
-                            />
-                            <InputError message={errors.desc} />
+                                disabled
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue
+                                        id="category"
+                                        placeholder="Select category"
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem key="general" value="general">
+                                        By General
+                                    </SelectItem>
+                                    <SelectItem
+                                        key="loan_prouct"
+                                        value="loan_product"
+                                    >
+                                        By Loan Prouct
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <InputError message={errors.category} />
                         </div>
-
                         <div className="space-y-2">
                             <Label htmlFor="fee_type">Fee type</Label>
                             <Select
@@ -111,6 +117,18 @@ export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: Loan
                         </div>
 
                         <div className="space-y-2">
+                            <Label htmlFor="desc">Description</Label>
+                            <Input
+                                id="desc"
+                                value={data.desc}
+                                onChange={(e) =>
+                                    setData("desc", e.target.value)
+                                }
+                                className="col-span-3"
+                            />
+                            <InputError message={errors.desc} />
+                        </div>
+                        <div className="space-y-2">
                             <Label htmlFor="fee_amount">Fee amount</Label>
                             <NumericFormat
                                 customInput={Input}
@@ -135,4 +153,6 @@ export function EditLoanCategoryFee({ loanCategoryFee }: { loanCategoryFee: Loan
             </DialogContent>
         </Dialog>
     );
-}
+};
+
+export default CreateLoanFeeByGeneral;

@@ -36,6 +36,8 @@ export interface User {
     email_verified_at: string;
 }
 
+
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -43,5 +45,7 @@ export type PageProps<
         user: User;
     };
     ziggy: Config & { location: string };
+    error: string;
+    success: string;
 };
 

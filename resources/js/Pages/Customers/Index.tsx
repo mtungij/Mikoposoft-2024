@@ -1,9 +1,10 @@
 import InputLabel from "@/Components/InputLabel";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Table,          
+    Table,
     TableBody,
     TableCell,
     TableHead,
@@ -12,13 +13,14 @@ import {
 } from "@/components/ui/table";
 import { PageProps, User } from "@/types";
 import { Head, router, useForm } from "@inertiajs/react";
-import { Edit, PlusCircle, Trash } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import React, { FormEvent } from "react";
 import { toast } from "sonner";
+import { DeleteCustomer } from "./actions/DeleteCustomer";
 import { useDebouncedCallback } from "use-debounce";
-import { DeleteUser } from "./partials/Deleteuser";
+import { Customer } from "@/lib/schemas";
 
-const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
+const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
     const { data, setData, post, errors, processing, reset } = useForm({
         name: "",
     });
@@ -26,19 +28,19 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
     const submit = (event: FormEvent) => {
         event.preventDefault();
 
-        post(route("employees.store"));
+        post(route("customers.store"));
 
-        toast.success("Employee created successfully");
+        toast.success("New Customer created successfully");
         reset();
     };
 
-    const searchUser = useDebouncedCallback(
+    const searchCustomer = useDebouncedCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.value === "") {
-                router.visit(route("employees.index"));
+                router.visit(route("customers.index"));
             } else {
                 router.visit(
-                    route("employees.index", {
+                    route("customers.index", {
                         search: event.target.value,
                     }),
                     {
@@ -52,12 +54,12 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
 
     return (
         <Authenticated user={auth.user}>
-            <Head title="Employees" />
+            <Head title="Customers" />
 
             <section className="bg-white p-5 rounded-md md:shadow-lg">
                 <div>
                     <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                        Employees
+                        Customers
                     </h2>
                 </div>
                 <div className="w-full grid md:grid-cols-2 items-center gap-4 pb-5">
@@ -66,13 +68,13 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
                         name="search"
                         className="max-w-sm"
                         placeholder="Search..."
-                        onChange={searchUser}
+                        // onChange={searchUser}
                     />
 
                     <div className="flex md:justify-end">
                         <Button
                             onClick={() =>
-                                router.visit(route("employees.create"))
+                                router.visit(route("customers.create"))
                             }
                             className="w-full md:w-fit"
                         >
@@ -86,44 +88,39 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>#</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Phone</TableHead>
-                                <TableHead>Email</TableHead>
+                                <TableHead>Customer Name</TableHead>
                                 <TableHead>Branch</TableHead>
-                                <TableHead>Position</TableHead>
-                                <TableHead>Gender</TableHead>
+                                <TableHead>CustomerId</TableHead>
+                                <TableHead>Phone Number</TableHead>
+                                <TableHead>Nick Name</TableHead>
+                                <TableHead>Status</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.map((user, index) => (
+                            {customers.map((customer, index) => (
                                 <TableRow>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{user.name}</TableCell>
-                                    <TableCell>{user.phone}</TableCell>
-                                    <TableCell>{user.email}</TableCell>
-                                    <TableCell>{user.branch?.name}</TableCell>
-                                    <TableCell>{user.position}</TableCell>
-                                    <TableCell>{user.gender}</TableCell>
-                                    <TableCell className="flex gap-2 items-center">
-                                        {user.position !== "admin" && (
-                                            <DeleteUser user={user} />
+                                    <TableCell>{customer.full_name}</TableCell>
+                                    <TableCell>
+                                        {customer.branch?.name}
+                                    </TableCell>
+                                    <TableCell>{customer.c_number}</TableCell>
+                                    <TableCell>{customer.phone}</TableCell>
+                                    <TableCell>{customer.nick_name}</TableCell>
+                                    <TableCell>
+                                        {customer.status == "new" ? (
+                                            <Badge variant="outline">
+                                                New Customer
+                                            </Badge>
+                                        ) : (
+                                            <Badge variant="destructive">
+                                                Old Customer
+                                            </Badge>
                                         )}
-
-                                        <Button
-                                            size={"icon"}
-                                            variant={"outline"}
-                                            className="text-cyan-500"
-                                            onClick={() =>
-                                                router.visit(
-                                                    route("employees.edit", {
-                                                        employee: user,
-                                                    })
-                                                )
-                                            }
-                                        >
-                                            <Edit className="size-4 stro-2" />
-                                        </Button>
+                                    </TableCell>
+                                    <TableCell className="flex gap-2 items-center">
+                                        <DeleteCustomer customer={customer} />
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -136,6 +133,3 @@ const Index = ({ auth, users }: PageProps<{ users: User[] }>) => {
 };
 
 export default Index;
-
-
-

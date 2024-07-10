@@ -7,6 +7,7 @@ import {
     LineChart,
     Settings,
     Minus,
+    Apple,
 } from "lucide-react";
 import {
     Accordion,
@@ -70,17 +71,58 @@ const Sidebar = () => {
                                 <Minus className="h-4 w-4" />
                                 Interest Formula
                             </Link>
+                            
+                            <Link
+                                href={route("transactions.index")}
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
+                            >
+                                <Minus className="h-4 w-4" />
+                                Transanction Accounts
+                            </Link>
+                            <Link
+                                href={route("branches.index")}
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            >
+                                <Apple className="h-4 w-4" />
+                                Branches
+                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                                    6
+                                </Badge>
+                            </Link>
                         </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
             <Link
-                href="#"
+                href={route('customers.index')}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
                 <Users className="h-4 w-4" />
                 Customers
             </Link>
+
+            <Accordion type="single" collapsible className="w-full px-3 py-2">
+                <AccordionItem value="item-1" className="w-full">
+                    <AccordionTrigger>
+                        <div className="flex gap-2">
+                            <Settings className="size-4" />
+                            <span>Customer</span>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <div className="grid gap-2">
+                            <Link
+                                href={route("customers.index")}
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
+                            >
+                                <Minus className="h-4 w-4" />
+                                Register Customer
+                            </Link>
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+
             <Link
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
