@@ -7,6 +7,7 @@ use App\Http\Controllers\InterestFormular;
 use App\Http\Controllers\InterestFormularController;
 use App\Http\Controllers\LoanCategoryController;
 use App\Http\Controllers\LoanCategoryFeeController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanFeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
@@ -66,6 +67,10 @@ Route::resource('/branches',BranchController::class)
 Route::resource('/customers',CustomerController::class)
     ->middleware(['auth','verified'])
     ->only(['index', 'create', 'edit', 'view', 'store','update','destroy']);
+
+Route::controller(LoanController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/loans', 'index')->name('loans.index');
+});
 
 
 require __DIR__.'/auth.php';

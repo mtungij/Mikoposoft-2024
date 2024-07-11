@@ -58,8 +58,8 @@ export interface Branch {
     status: string;
 }
 
-export type paginatedOrder = {
-    data: Order[];
+export type paginatedCustomer = {
+    data: Customer[];
     links: PaginationLink[];
     current_page: number;
     last_page: number;

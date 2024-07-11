@@ -12,15 +12,15 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { PageProps, User } from "@/types";
-import { Head, router, useForm } from "@inertiajs/react";
-import { PlusCircle } from "lucide-react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
+import { ArrowLeft, ArrowRight, ChevronFirstIcon, ChevronLastIcon, PlusCircle } from "lucide-react";
 import React, { FormEvent } from "react";
 import { toast } from "sonner";
 import { DeleteCustomer } from "./actions/DeleteCustomer";
 import { useDebouncedCallback } from "use-debounce";
-import { Customer } from "@/lib/schemas";
+import { Customer, paginatedCustomer } from "@/lib/schemas";
 
-const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
+const Index = ({ auth, customers }: PageProps<{ customers: paginatedCustomer }>) => {
     const { data, setData, post, errors, processing, reset } = useForm({
         name: "",
     });
@@ -68,7 +68,7 @@ const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
                         name="search"
                         className="max-w-sm"
                         placeholder="Search..."
-                        // onChange={searchUser}
+                        onChange={searchCustomer}
                     />
 
                     <div className="flex md:justify-end">
@@ -98,7 +98,7 @@ const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {customers.map((customer, index) => (
+                            {customers.data?.map((customer, index) => (
                                 <TableRow key={customer.id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{customer.full_name}</TableCell>
@@ -126,6 +126,57 @@ const Index = ({ auth, customers }: PageProps<{ customers: Customer[] }>) => {
                             ))}
                         </TableBody>
                     </Table>
+                    <div className="flex items-center gap-3 justify-center my-3">
+                        <Link
+                            href={customers.first_page_url}
+                            disabled={!customers.first_page_url}
+                            preserveScroll
+                        >
+                            <Button
+                                variant={"outline"}
+                                size={"sm"}
+                                disabled={!customers.first_page_url}
+                            >
+                                <ChevronFirstIcon className="size-5 text-muted-foreground mr-2" />
+                            </Button>
+                        </Link>
+                        <Link
+                            href={customers.prev_page_url}
+                            disabled={!customers.prev_page_url}
+                            preserveScroll
+                        >
+                            <Button variant={"outline"} size={"sm"}>
+                                <ArrowLeft className="size-5 text-muted-foreground mr-2" />
+                                Prev
+                            </Button>
+                        </Link>
+                        <span>
+                            page - <b>{customers.current_page}</b>
+                        </span>
+                        <Link
+                            href={customers.next_page_url}
+                            disabled={!customers.next_page_url}
+                            preserveScroll
+                        >
+                            <Button variant={"outline"} size={"sm"}>
+                                Next
+                                <ArrowRight className="size-5 text-muted-foreground mr-l" />
+                            </Button>
+                        </Link>
+                        <Link
+                            href={customers.last_page_url}
+                            disabled={!customers.last_page_url}
+                            preserveScroll
+                        >
+                            <Button
+                                variant={"outline"}
+                                size={"sm"}
+                                disabled={!customers.last_page_url}
+                            >
+                                <ChevronLastIcon className="size-5 text-muted-foreground mr-2" />
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
             </section>
         </Authenticated>

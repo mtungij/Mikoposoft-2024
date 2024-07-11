@@ -8,6 +8,7 @@ import {
     Settings,
     Minus,
     Apple,
+    HandHelping,
 } from "lucide-react";
 import {
     Accordion,
@@ -71,7 +72,7 @@ const Sidebar = () => {
                                 <Minus className="h-4 w-4" />
                                 Interest Formula
                             </Link>
-                            
+
                             <Link
                                 href={route("transactions.index")}
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
@@ -94,11 +95,19 @@ const Sidebar = () => {
                 </AccordionItem>
             </Accordion>
             <Link
-                href={route('customers.index')}
+                href={route("customers.index")}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
             >
                 <Users className="h-4 w-4" />
                 Customers
+            </Link>
+
+            <Link
+                href={route("loans.index")}
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+            >
+                <HandHelping className="h-4 w-4" />
+                Loans
             </Link>
 
             <Accordion type="single" collapsible className="w-full px-3 py-2">

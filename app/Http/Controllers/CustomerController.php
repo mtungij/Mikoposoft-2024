@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
@@ -15,9 +16,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->get();
+        $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->paginate(25);
         if(request()->search) {
-            $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->where('name', 'like', '%'. request()->search. '%')->get();
+            $customers = Customer::whereRelation('branch', 'company_id', auth()->user()->company_id)->with('branch')->where('full_name', 'like', '%'. request()->search. '%')->paginate(10);
         }
 
          return Inertia::render("Customers/Index",[
@@ -68,8 +69,14 @@ class CustomerController extends Controller
   
           $validatedData['company_id'] = auth()->user()->company_id;
   
-          Customer::create($validatedData);
-             
+          $customer = Customer::create($validatedData);
+
+        //   $response = Http::withHeaders([
+        //                     'apiKey' => '',
+        //                 ])->post('https://galadove.mikoposoft.com/api/v1/receive/action/send/sms', ['phone' => $customer->phone, 'message' => 'message']);
+
+        //   dd($response);
+                                    
           return redirect()->back();
     }
 
